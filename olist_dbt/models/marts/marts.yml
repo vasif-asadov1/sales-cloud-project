@@ -1,0 +1,86 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: Customer dimension table
+
+    columns:
+      - name: customer_id
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_sellers
+    description: Seller dimension table
+
+    columns:
+      - name: seller_id
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_products
+    description: Product dimension table
+
+    columns:
+      - name: product_id
+        tests:
+          - unique
+          - not_null
+
+
+  - name: fct_order_items
+
+    columns:
+
+      - name: order_item_id
+        tests:
+          - not_null
+
+      - name: order_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('fct_orders')
+                field: order_id
+
+      - name: product_id
+        tests:
+          - not_null
+
+      - name: seller_id
+        tests:
+          - not_null
+
+
+  - name: fct_orders
+    description: Order-level fact table
+
+    columns:
+      - name: order_id
+        tests:
+          - unique
+          - not_null
+
+      - name: customer_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_customers')
+                field: customer_id
+
+  - name: dim_date
+    description: Date dimension table
+
+    columns:
+      - name: date_id
+        tests:
+          - unique
+          - not_null
+
+      - name: date
+        tests:
+          - unique
+          - not_null
