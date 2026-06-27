@@ -103,3 +103,5 @@ Thumbs.db
 
 data/exports/*
 !data/exports/.gitkeep
+
+.databricks
